@@ -83,6 +83,12 @@ const authLimiter = rateLimit({
 });
 app.use('/api/auth/', authLimiter);
 
+// Root and Favicon routes (prevents 404 errors in production logs and health checks)
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'ShopEase API Server is online 🚀' });
+});
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({
